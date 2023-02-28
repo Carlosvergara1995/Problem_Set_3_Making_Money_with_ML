@@ -1,11 +1,12 @@
-Universidad de Los Andes
+#Universidad de Los Andes
+
 Facultad de Economía
 
 Maestría en Economía Aplicada
 
 Big Data
 
-Taller No. 3 Porblem_Set_3 - Making Money with ML?
+#Taller No. 3 Porblem_Set_3 - Making Money with ML?
 
 Integrantes:
 
@@ -19,20 +20,20 @@ Héctor David Taticuán - Código de Estudiante No. 202225884
 
 Fecha de entrega: 12 de marzo de 2023.
 
-Contenido del repositorio
+#Contenido del repositorio
 
-1. DOCUMENTOS DEL TALLER No. 3:
+##1. DOCUMENTOS DEL TALLER No. 3:
 
 Se encuentra dos carpetas. (i). Documentos del traller y la base de datos y (ii). Entrega final. Se adjunta la entrega final en formato Word y formato PDF.
 
-2. SCRIPTS:
+##2. SCRIPTS:
 
 
-3. STORES:
+##3. STORES:
 
 Se cargan todas las bases de datos utilizadas y modificadas.
 
-4. VIEWS:
+##4. VIEWS:
 Dentro de la carpeta se encuentra:
 
 
