@@ -1,0 +1,28 @@
+{
+    "id": "96D8454D",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1676147609946.0,
+    "source_on_save": false,
+    "relative_order": 7,
+    "properties": {
+        "id": "e0ce4175a07e484f87bcd64eb2ce4647",
+        "name": "histograma_log_sex",
+        "title": "histograma_log_sex",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 0,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1676147609946,
+    "read_only": false,
+    "read_only_alternatives": []
+}
