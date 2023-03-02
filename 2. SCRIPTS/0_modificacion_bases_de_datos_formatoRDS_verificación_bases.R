@@ -20,3 +20,14 @@ df_train <- import("train.csv")
 
 saveRDS(df_test,"df_test.rds")
 saveRDS(df_train,"df_train.rds")
+
+#Con las bases cargadas, se verifican para evidenciar variables distintas:
+
+colnames(df_train)
+colnames(df_test)
+summary(df_test)
+summary(df_train)
+
+diff_variables <- setdiff(names(df_train), names(df_test))
+
+#Se evidencia que las bases de datos no cuentan con variables distintas. 
