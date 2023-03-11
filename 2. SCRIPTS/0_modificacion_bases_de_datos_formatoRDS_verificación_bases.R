@@ -44,6 +44,10 @@ df$parking<-grepl("parqueaderos", df$title, ignore.case = TRUE) | grepl("parquea
 
 df$Terraza<-grepl("terraza", df$title, ignore.case = TRUE) | grepl("terraza", df$description, ignore.case = TRUE)
 
+df$Terraza<-grepl("balcon", df$title, ignore.case = TRUE) | grepl("balcon", df$description, ignore.case = TRUE)
+
+df$Terraza<-grepl("balcones", df$title, ignore.case = TRUE) | grepl("balcones", df$description, ignore.case = TRUE)
+
 df$Garaje<-grepl("garaje", df$title, ignore.case = TRUE) | grepl("garaje", df$description, ignore.case = TRUE)
 
 df$Garaje<-grepl("garajes", df$title, ignore.case = TRUE) | grepl("garajes", df$description, ignore.case = TRUE)
@@ -181,5 +185,4 @@ sum(is.na(df_chapinero$bathrooms))
 sum(is.na(df_chapinero$rooms))
 
 #Se evidencia que existen NAs en las variables "surface_total", "surface_covered", "bathrooms" y "rooms".
-
 
