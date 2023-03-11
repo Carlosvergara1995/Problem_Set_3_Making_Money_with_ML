@@ -9,8 +9,9 @@
 rm(list=ls())
 install.packages("pacman")
 require(pacman)
-p_load(tidyverse,rvest,writexl,rio,skimr,pastecs,PerformanceAnalytics,naniar,gtsummary)
+p_load(tidyverse,rvest,writexl,rio,skimr,pastecs,PerformanceAnalytics,naniar,gtsummary,sf,leaflet,tmaptools,osmdata,nngeo,rgeos)
 #Se llaman las bases de datos: 
+
 setwd("~/OneDrive - Universidad de los Andes/2023/2023-1/BIG DATA/TALLERES GRUPALES/TALLER No. 3/Problem_Set_3_Making_Money_with_ML/3. STORE")
 
 df_test <- import("test.csv")
@@ -32,26 +33,33 @@ diff_variables <- setdiff(names(df_train), names(df_test))
 
 #Se evidencia que las bases de datos no cuentan con variables distintas. 
 
-#p_load(tidyverse, sf, tmaptools)
-p_load(tidyverse,rio,sf,leaflet,tmaptools,osmdata,nngeo,rgeos)
-
-df_train = read.csv("train.csv")
-df_test = read.csv("test.csv")
-
 df = bind_rows(df_train,df_test) %>% st_as_sf(coords=c("lon","lat"),crs=4326)
 head(df)
 
 # creamos variables nuevas a partir de la descripcion y el title
+
 df$parking<-grepl("parqueadero", df$title, ignore.case = TRUE) | grepl("parqueadero", df$description, ignore.case = TRUE)
 
+df$parking<-grepl("parqueaderos", df$title, ignore.case = TRUE) | grepl("parqueaderos", df$description, ignore.case = TRUE)
 
 df$Terraza<-grepl("terraza", df$title, ignore.case = TRUE) | grepl("terraza", df$description, ignore.case = TRUE)
 
 df$Garaje<-grepl("garaje", df$title, ignore.case = TRUE) | grepl("garaje", df$description, ignore.case = TRUE)
 
+df$Garaje<-grepl("garajes", df$title, ignore.case = TRUE) | grepl("garajes", df$description, ignore.case = TRUE)
+
+#Se verifica la nueva base de datos: 
+
+summary(df)
+
 sum(is.na(df$bedrooms))
+sum(is.na(df$surface_total))
+sum(is.na(df$surface_covered))
+sum(is.na(df$bathrooms))
+sum(is.na(df$rooms))
 
 # se defínen las zonas a analizar 
+
 chapinero <- getbb(place_name = "UPZ Chapinero, Bogota", 
                    featuretype = "boundary:administrative", 
                    format_out = "sf_polygon") %>% .$multipolygon
@@ -164,6 +172,10 @@ df_chapinero$dist_park = apply(dist_park , 1 , min)
 
 colnames(df_chapinero) # vemos que se han agregado las columnas creadas a partir de datos espaciales
 
-
+sum(is.na(df_chapinero$bedrooms))
+sum(is.na(df_chapinero$surface_total))
+sum(is.na(df_chapinero$surface_covered))
+sum(is.na(df_chapinero$bathrooms))
+sum(is.na(df_chapinero$rooms))
 
 
