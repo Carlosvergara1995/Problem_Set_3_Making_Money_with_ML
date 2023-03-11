@@ -69,7 +69,9 @@ leaflet() %>% addTiles() %>% addPolygons(data=chapinero)
 chapinero <- st_transform(chapinero,st_crs(df))
 
 df_chapinero <- df[chapinero,]
+
 #head(df_chapinero)
+
 table(df_chapinero$bedrooms)
 
 available_features()
@@ -177,5 +179,7 @@ sum(is.na(df_chapinero$surface_total))
 sum(is.na(df_chapinero$surface_covered))
 sum(is.na(df_chapinero$bathrooms))
 sum(is.na(df_chapinero$rooms))
+
+#Se evidencia que existen NAs en las variables "surface_total", "surface_covered", "bathrooms" y "rooms".
 
 
