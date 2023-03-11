@@ -165,3 +165,5 @@ df_chapinero$dist_park = apply(dist_park , 1 , min)
 colnames(df_chapinero) # vemos que se han agregado las columnas creadas a partir de datos espaciales
 
 
+
+
