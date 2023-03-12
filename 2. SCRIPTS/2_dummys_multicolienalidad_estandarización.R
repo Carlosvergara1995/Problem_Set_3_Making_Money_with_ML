@@ -1,5 +1,7 @@
 library(pacman)
-p_load(tidyverse,rio,skimr,dplyr, caret, magrittr, glmnet,smotefamily,ROSE)
+p_load(tidyverse,rio,skimr,dplyr, caret, magrittr, glmnet,smotefamily,ROSE, rpart, rattle,MLmetrics)
+
+#cargamos nuestra base 
 
 df1<- df
 #asignamos factor a las variables y dummyficamos ####
@@ -43,3 +45,6 @@ test_s[, variables_numericas] <- predict(escalador, test[, variables_numericas])
 
 #diagrama de cajas y bigotes 
 
+#exportamos la base estandarizada y dummificada####
+saveRDS(train_s, file = "train_s")
+saveRDS(test_s, file = "test_s")
