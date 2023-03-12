@@ -37,7 +37,9 @@ train_s[, variables_numericas] <- predict(escalador, train[, variables_numericas
 test_s[, variables_numericas] <- predict(escalador, test[, variables_numericas])
 
 
+#Analisis de distribución ####
+#diagreama de disperción 
 
 
-
+#diagrama de cajas y bigotes 
 
