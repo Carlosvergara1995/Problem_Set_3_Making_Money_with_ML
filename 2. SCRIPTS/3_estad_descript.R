@@ -4,7 +4,24 @@
 #_______________________________________________________________
 
 library(pacman)
-p_load(tidyverse,rio,skimr,dplyr, caret, magrittr, glmnet,smotefamily,ROSE, rpart, rattle,MLmetrics)
+p_load(tidyverse,
+       rvest,
+       writexl,
+       rio,
+       skimr,
+       sf,
+       pastecs,
+       stargazer,
+       PerformanceAnalytics,
+       naniar,
+       gtsummary,
+       stringr,
+       rgeos, 
+       plotly, 
+       leaflet, 
+       tmaptools,
+       osmdata
+)
 
 #cargamos nuestras bases:
 
@@ -28,6 +45,77 @@ stat.desc(train_s)
 descriptivas_train <- stat.desc(train_s)
 descriptivas_train$Estadisticas <- row.names(descriptivas_train) 
 descriptivas_train <- descriptivas_train %>% select(Estadisticas, everything())
-write_xlsx(descriptivas_train, "d_train_p.xlsx")
+write_xlsx(descriptivas_train, "descrip_train_s.xlsx")
+
+##Gráficos: 
+
+#Precio de venta en Chapinero: 
+
+p <- ggplot(train_s, aes(x = price)) +
+  geom_histogram(fill = "darkblue", alpha = 0.4) +
+  labs(x = "Valor de venta", y = "Cantidad de unmuebles") +
+  scale_x_log10(labels = scales::dollar) +
+  theme_bw()
+ggplotly(p)
+
+#Distancias con parques en Chapinero:
+
+p2 <- ggplot(train_s, aes(x = dist_park, y = price)) +
+  geom_point(col = "red", alpha = 0.4) +
+  labs(x = "Distancia al parque de la 93", 
+       y = "Valor venta inmueble",
+       title = "Relación entre distancia al parque de la 93 y el valor del inmueble") +
+  scale_x_log10() +
+  scale_y_log10(labels = scales::dollar) +
+  theme_bw()
+ggplotly(p2) 
+
+#Distancias con colegios en Chapinero:
+
+p3 <- ggplot(train_s, aes(x = dist_school, y = price)) +
+  geom_point(col = "green", alpha = 0.4) +
+  labs(x = "Distancia colegios", 
+       y = "Valor venta inmueble",
+       title = "Relación entre distancia a colegios y el valor del inmueble") +
+  scale_x_log10() +
+  scale_y_log10(labels = scales::dollar) +
+  theme_bw()
+ggplotly(p3) 
+
+#Distancias con restaurantes:
+
+p4 <- ggplot(train_s, aes(x = dist_restaurant, y = price)) +
+  geom_point(col = "orange", alpha = 0.4) +
+  labs(x = "Distancia colegios", 
+       y = "Valor venta inmueble",
+       title = "Relación entre distancia a colegios y el valor del inmueble") +
+  scale_x_log10() +
+  scale_y_log10(labels = scales::dollar) +
+  theme_bw()
+ggplotly(p4) 
+
+#Distancias con bancos:
+
+p5 <- ggplot(train_s, aes(x = dist_bank, y = price)) +
+  geom_point(col = "purple", alpha = 0.4) +
+  labs(x = "Distancia colegios", 
+       y = "Valor venta inmueble",
+       title = "Relación entre distancia a colegios y el valor del inmueble") +
+  scale_x_log10() +
+  scale_y_log10(labels = scales::dollar) +
+  theme_bw()
+ggplotly(p5) 
+
+#Distancias con estaciones de bus:
+
+p6 <- ggplot(train_s, aes(x = dist_bus_station, y = price)) +
+  geom_point(col = "pink", alpha = 0.4) +
+  labs(x = "Distancia colegios", 
+       y = "Valor venta inmueble",
+       title = "Relación entre distancia a colegios y el valor del inmueble") +
+  scale_x_log10() +
+  scale_y_log10(labels = scales::dollar) +
+  theme_bw()
+ggplotly(p6) 
 
 
