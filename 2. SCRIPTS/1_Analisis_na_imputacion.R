@@ -89,4 +89,4 @@ sum(is.na(data$surface_total))
 
 
 #Imputacion de datos####
-df <- data[, !(names(data) %in% c("surface_covered", "rooms", "title", "description", "city", "property_id", "month", "year", "geometry"))]
+df <- data[, !(names(data) %in% c("surface_covered", "rooms", "title", "description", "city", "property_id", "month", "year", "geometry", "operation_type"))]
