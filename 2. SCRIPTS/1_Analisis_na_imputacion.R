@@ -1,4 +1,4 @@
-library(stringr, dplyr)
+library(stringr, dplyr,rpart)
 #cargamos nuestra data
 df_con_variables <- readRDS("~/Desktop/git hut repositorios/Problem_Set_3_Making_Money_with_ML/3. STORE/df_con_variables.rds")
 
