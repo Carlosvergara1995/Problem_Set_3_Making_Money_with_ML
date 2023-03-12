@@ -18,5 +18,5 @@ df_train <- import("train.csv")
 
 ## Se salvan las bases de datos como rds.
 
-saveRDS(df_test,"df_test.rds")
-saveRDS(df_train,"df_train.rds")
+#saveRDS(df_test,"df_test.rds")
+#saveRDS(df_train,"df_train.rds")
