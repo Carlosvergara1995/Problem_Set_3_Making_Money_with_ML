@@ -46,5 +46,5 @@ test_s[, variables_numericas] <- predict(escalador, test[, variables_numericas])
 #diagrama de cajas y bigotes 
 
 #exportamos la base estandarizada y dummificada####
-saveRDS(train_s, file = "train_s")
-saveRDS(test_s, file = "test_s")
+saveRDS(train_s, file = "train_s.rds")
+saveRDS(test_s, file = "test_s.rds")
