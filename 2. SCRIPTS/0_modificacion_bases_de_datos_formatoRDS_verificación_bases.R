@@ -9,10 +9,10 @@
 rm(list=ls())
 install.packages("pacman")
 require(pacman)
-p_load(tidyverse,rvest,writexl,rio,skimr,pastecs,PerformanceAnalytics,naniar,gtsummary,sf,leaflet,tmaptools,osmdata,nngeo,rgeos)
+p_load(tidyverse,rvest,writexl,rio,skimr,pastecs,PerformanceAnalytics,naniar,gtsummary,sf,leaflet,tmaptools,osmdata,nngeo,rgeos,rnaturalearth)
 #Se llaman las bases de datos: 
-
-setwd("~/OneDrive - Universidad de los Andes/2023/2023-1/BIG DATA/TALLERES GRUPALES/TALLER No. 3/Problem_Set_3_Making_Money_with_ML/3. STORE")
+setwd('..')
+setwd("3. STORE")
 
 df_test <- import("test.csv")
 df_train <- import("train.csv")
@@ -38,15 +38,13 @@ head(df)
 
 # creamos variables nuevas a partir de la descripcion y el title
 
-df$parking<-grepl("parqueadero", df$title, ignore.case = TRUE) | grepl("parqueadero", df$description, ignore.case = TRUE)
+df$parking <- grepl("parqueadero(s)?", df$title, ignore.case = TRUE) | grepl("parqueadero(s)?", df$description, ignore.case = TRUE)
 
-df$parking<-grepl("parqueaderos", df$title, ignore.case = TRUE) | grepl("parqueaderos", df$description, ignore.case = TRUE)
+df$Terraza<-grepl("terraza(s)?", df$title, ignore.case = TRUE) | grepl("terraza(s)?", df$description, ignore.case = TRUE)
 
-df$Terraza<-grepl("terraza", df$title, ignore.case = TRUE) | grepl("terraza", df$description, ignore.case = TRUE)
+df$Garaje<-grepl("garaje(s)?", df$title, ignore.case = TRUE) | grepl("garaje(s)?", df$description, ignore.case = TRUE)
 
-df$Garaje<-grepl("garaje", df$title, ignore.case = TRUE) | grepl("garaje", df$description, ignore.case = TRUE)
 
-df$Garaje<-grepl("garajes", df$title, ignore.case = TRUE) | grepl("garajes", df$description, ignore.case = TRUE)
 
 #Se verifica la nueva base de datos: 
 
@@ -64,24 +62,37 @@ chapinero <- getbb(place_name = "UPZ Chapinero, Bogota",
                    featuretype = "boundary:administrative", 
                    format_out = "sf_polygon") %>% .$multipolygon
 
+bogota <- getbb(place_name = "Bogota", 
+                   featuretype = "boundary:administrative", 
+                   format_out = "sf_polygon") %>% .$multipolygon
+
 leaflet() %>% addTiles() %>% addPolygons(data=chapinero)
 
 chapinero <- st_transform(chapinero,st_crs(df))
+bogota <- st_transform(bogota,st_crs(df))
 
 df_chapinero <- df[chapinero,]
 
 #head(df_chapinero)
 
-table(df_chapinero$bedrooms)
-
 available_features()
+
+
 
 available_tags("amenity")
 bar_chapinero <- opq(bbox = st_bbox(df_chapinero)) %>%
   add_osm_feature(key = "amenity", value = "bar") %>%
   osmdata_sf() %>% .$osm_points %>% select(osm_id,name)
+
 leaflet() %>% addTiles() %>% addCircleMarkers(data=bar_chapinero , col="red")
 
+###Para bogota
+bar_bogota <- opq(bbox = st_bbox(df)) %>%
+  add_osm_feature(key = "amenity", value = "bar") %>%
+  osmdata_sf() %>% .$osm_points %>% select(osm_id,name)
+
+
+###estaciones de bus Chapinero
 osm_chapinero <- opq(bbox = st_bbox(df_chapinero)) %>%
   add_osm_feature(key="amenity" , value="bus_station")
 
@@ -91,14 +102,17 @@ bus_station_chapinero <- osm_sf_chapinero$osm_points %>% select(osm_id,amenity)
 
 leaflet() %>% addTiles() %>% addCircleMarkers(data=bus_station_chapinero , col="red")
 
-osm_chapinero <- opq(bbox = st_bbox(df_chapinero)) %>%
+###Estaciones de bus Para Bogota
+
+osm_bogota <- opq(bbox = st_bbox(df)) %>%
   add_osm_feature(key="amenity" , value="bus_station")
 
-osm_sf_chapinero <- osm_chapinero %>% osmdata_sf()
+osm_sf_bogota <- osm_bogota %>% osmdata_sf()
 
-bus_station_chapinero <- osm_sf_chapinero$osm_points %>% select(osm_id,amenity)
+bus_station_bogota <- osm_sf_bogota$osm_points %>% select(osm_id,amenity)
 
-leaflet() %>% addTiles() %>% addCircleMarkers(data=bus_station_chapinero , col="red")
+
+###Bancos chapinero
 
 bank_chapinero <- opq(bbox = st_bbox(df_chapinero)) %>%
   add_osm_feature(key = "amenity", value = "bank") %>%
@@ -106,29 +120,47 @@ bank_chapinero <- opq(bbox = st_bbox(df_chapinero)) %>%
 
 leaflet() %>% addTiles() %>% addCircleMarkers(data=bank_chapinero , col="red")
 
+### Bancos bogota
+bank_bogota <- opq(bbox = st_bbox(df)) %>%
+  add_osm_feature(key = "amenity", value = "bank") %>%
+  osmdata_sf() %>% .$osm_points %>% select(osm_id,name)
+
+### Restaurantes Chapinero
 restaurant_chapinero <- opq(bbox = st_bbox(df_chapinero)) %>%
   add_osm_feature(key = "amenity", value = "restaurant") %>%
   osmdata_sf() %>% .$osm_points %>% select(osm_id,name)
 
 leaflet() %>% addTiles() %>% addCircleMarkers(data=restaurant_chapinero , col="red")
 
+### Restaurantes bogota
+restaurant_bogota <- opq(bbox = st_bbox(df)) %>%
+  add_osm_feature(key = "amenity", value = "restaurant") %>%
+  osmdata_sf() %>% .$osm_points %>% select(osm_id,name)
+
+### Escuelas chapinero
 school_chapinero <- opq(bbox = st_bbox(df_chapinero)) %>%
   add_osm_feature(key = "amenity", value = "school") %>%
   osmdata_sf() %>% .$osm_points %>% select(osm_id,name)
 
 leaflet() %>% addTiles() %>% addCircleMarkers(data=school_chapinero , col="red")
 
-school_chapinero <- opq(bbox = st_bbox(df_chapinero)) %>%
+### Escuelas bogota
+school_bogota <- opq(bbox = st_bbox(df)) %>%
   add_osm_feature(key = "amenity", value = "school") %>%
   osmdata_sf() %>% .$osm_points %>% select(osm_id,name)
 
-leaflet() %>% addTiles() %>% addCircleMarkers(data=school_chapinero , col="red")
-
+##PARQUES CHAPINERO
 parques_chapinero <- opq(bbox = st_bbox(df_chapinero)) %>%
   add_osm_feature(key = "leisure", value = "park") %>%
   osmdata_sf() %>% .$osm_polygons %>% select(osm_id,name)
 
+##PARQUES bogota
+parques_bogota <- opq(bbox = st_bbox(df)) %>%
+  add_osm_feature(key = "leisure", value = "park") %>%
+  osmdata_sf() %>% .$osm_polygons %>% select(osm_id,name)
+
 centroides_chapinero <- gCentroid(as(parques_chapinero$geometry, "Spatial"), byid = T)
+centroides_bogota <- gCentroid(as(parques_bogota$geometry, "Spatial"), byid = T)
 
 leaflet() %>%
   addTiles() %>%
@@ -141,11 +173,25 @@ leaflet() %>%
 centroides_chapinero_sf <- st_as_sf(centroides_chapinero, coords = c("x", "y"))
 dist_matrix <- st_distance(x = df_chapinero, y = centroides_chapinero_sf)
 
+##Bogota
+centroides_bogota_sf <- st_as_sf(centroides_bogota, coords = c("x", "y"))
+dist_matrix_b <- st_distance(x = df, y = centroides_bogota_sf)
+
+
+#### posicion
 posicion <- apply(dist_matrix, 1, function(x) which(min(x) == x))
 areas <- st_area(parques_chapinero)
 
+##Bogota
+posicion_b <- apply(dist_matrix_b, 1, function(x) which(min(x) == x))
+areas_b <- st_area(parques_bogota)
+
+
+
+#dist_bares
 dist_bar <- st_distance(x = df_chapinero, y = bar_chapinero)
-#dist_bar
+dist_bar_b <- st_distance(x = df, y = bar_bogota)
+
 
 #chapinero-distancia al parque de la 93
 df_chapinero$dist_bar = apply(dist_bar , 1 , min)
@@ -157,29 +203,44 @@ parkch %>% head()
 
 leaflet() %>% addTiles() %>% addPolygons(data=parkch , col="green")
 
+####estaciones bus
 dist_bus_station <- st_distance(x = df_chapinero, y = bus_station_chapinero)
 df_chapinero$dist_bus_station = apply(dist_bus_station , 1 , min)
 
+##Bogota bus
+dist_bus_station_b <- st_distance(x = df, y = bus_station_bogota)
+df$dist_bus_station = apply(dist_bus_station_b , 1 , min)
+
+##Bancos
 dist_bank <- st_distance(x = df_chapinero, y = bank_chapinero)
 df_chapinero$dist_bank = apply(dist_bank , 1 , min)
 
+#bancos BOGOTA
+df$dist_bank = apply(st_distance(x = df, y = bank_bogota) , 1 , min)
+
+#Restaurantes Chapinero
 dist_restaurant <- st_distance(x = df_chapinero, y = restaurant_chapinero)
 df_chapinero$dist_restaurant = apply(dist_restaurant , 1 , min)
+df$dist_restaurant = apply(st_distance(x = df, y = restaurant_bogota) , 1 , min)
 
+##Escuelas
 dist_school <- st_distance(x = df_chapinero, y = school_chapinero)
 df_chapinero$dist_school = apply(dist_school , 1 , min)
+df$dist_school = apply(st_distance(x = df, y = school_bogota) , 1 , min)
 
+##Parques
 dist_park <- st_distance(x = df_chapinero, y = parkch)
 df_chapinero$dist_park = apply(dist_park , 1 , min)
+df$dist_park = apply(st_distance(x = df, y = parques_bogota) , 1 , min)
 
-colnames(df_chapinero) # vemos que se han agregado las columnas creadas a partir de datos espaciales
+colnames(df) # vemos que se han agregado las columnas creadas a partir de datos espaciales
 
-sum(is.na(df_chapinero$bedrooms))
-sum(is.na(df_chapinero$surface_total))
-sum(is.na(df_chapinero$surface_covered))
-sum(is.na(df_chapinero$bathrooms))
-sum(is.na(df_chapinero$rooms))
+colMeans(is.na(df)) * 100
+
 
 #Se evidencia que existen NAs en las variables "surface_total", "surface_covered", "bathrooms" y "rooms".
 
 
+
+
+saveRDS(df,"df_con_variables.rds")
