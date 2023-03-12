@@ -79,7 +79,7 @@ p3 <- ggplot(train_s, aes(x = dist_school, y = price)) +
   geom_point(col = "green", alpha = 0.4) +
   labs(x = "Distancia ", 
        y = "Valor venta inmueble",
-       title = "Relación entre distancia a colegios y el valor del inmueble") +
+       title = "Colegios y el valor del inmueble") +
   scale_x_log10() +
   scale_y_log10(labels = scales::dollar) +
   theme_bw()
@@ -91,7 +91,7 @@ p4 <- ggplot(train_s, aes(x = dist_restaurant, y = price)) +
   geom_point(col = "orange", alpha = 0.4) +
   labs(x = "Distancia ", 
        y = "Valor venta inmueble",
-       title = "Relación entre distancia a restaurantes y el valor del inmueble") +
+       title = "Restaurantes y el valor del inmueble") +
   scale_x_log10() +
   scale_y_log10(labels = scales::dollar) +
   theme_bw()
@@ -103,7 +103,7 @@ p5 <- ggplot(train_s, aes(x = dist_bank, y = price)) +
   geom_point(col = "purple", alpha = 0.4) +
   labs(x = "Distancia ", 
        y = "Valor venta inmueble",
-       title = "Relación entre distancia a bancos y el valor del inmueble") +
+       title = "Bancos y el valor del inmueble") +
   scale_x_log10() +
   scale_y_log10(labels = scales::dollar) +
   theme_bw()
@@ -115,7 +115,7 @@ p6 <- ggplot(train_s, aes(x = dist_bus_station, y = price)) +
   geom_point(col = "pink", alpha = 0.4) +
   labs(x = "Distancia ", 
        y = "Valor venta inmueble",
-       title = "Relación entre distancia a estaciones de bus y el valor del inmueble") +
+       title = "Estaciones de bus y el valor del inmueble") +
   scale_x_log10() +
   scale_y_log10(labels = scales::dollar) +
   theme_bw()
@@ -139,3 +139,4 @@ descriptivas_test$Estadisticas <- row.names(descriptivas_test)
 descriptivas_test <- descriptivas_test %>% select(Estadisticas, everything())
 write_xlsx(descriptivas_test, "descrip_test_s.xlsx")
 
+##
