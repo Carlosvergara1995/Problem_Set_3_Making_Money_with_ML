@@ -89,6 +89,4 @@ sum(is.na(data$surface_total))
 
 
 #Imputacion de datos####
-df <- subset(data, select = -c("surface_covered","rooms","title","description","city","property_id","month","year","geometry"))
-
 df <- data[, !(names(data) %in% c("surface_covered", "rooms", "title", "description", "city", "property_id", "month", "year", "geometry"))]
