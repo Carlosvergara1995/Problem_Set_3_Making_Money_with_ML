@@ -1,3 +1,10 @@
+#Problmem_Set_3
+# Modelos arboles.
+#Carlos Vergara, Alexandra Rizo, Danna Bolaños, Héctor Tacumán
+#_______________________________________________________________
+
+#######Preparación del espacio########
+
 #Modelo Arboles
 set.seed(123)
 
