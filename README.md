@@ -32,7 +32,17 @@ Se encuentra dos carpetas. (i). Documentos del traller y la base de datos y (ii)
 
 ## 2. SCRIPTS:
 
+0. Modificación de bases de datos de formato cvs a rds y modificación en materia de latitudes y longitudes entre otros. 
 
+1. Análisis de las variables,nas e imputación. 
+
+2. Creación de variables dummies.
+
+3. Estadísticas descriptivas aplicables para los datos de training y test.
+
+4. Modelo de arboles
+
+5. Regresiones. 
 
 ## 3. STORES:
 
@@ -42,6 +52,9 @@ Se cargan todas las bases de datos utilizadas y modificadas.
 
 Dentro de la carpeta se encuentra: 
 
+1. Plots de arboles. 
+
+2. Plots de estadisticos descriptivos. 
  
 
 Este Problem Set se trabajó en la versión de R 4.2.0 y licencia MIT. 
