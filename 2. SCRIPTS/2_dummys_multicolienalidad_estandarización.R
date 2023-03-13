@@ -1,3 +1,8 @@
+#Problmem_Set_3
+# Variables Dymmies
+#Carlos Vergara, Alexandra Rizo, Danna Bolaños, Héctor Tacumán
+#_______________________________________________________________
+
 library(pacman)
 p_load(tidyverse,rio,skimr,dplyr, caret, magrittr, glmnet,smotefamily,ROSE, rpart, rattle,MLmetrics,ranger, SuperLearner, randomForest)
 
