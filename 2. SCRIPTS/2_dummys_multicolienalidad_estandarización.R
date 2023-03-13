@@ -1,5 +1,5 @@
 library(pacman)
-p_load(tidyverse,rio,skimr,dplyr, caret, magrittr, glmnet,smotefamily,ROSE, rpart, rattle,MLmetrics,ranger)
+p_load(tidyverse,rio,skimr,dplyr, caret, magrittr, glmnet,smotefamily,ROSE, rpart, rattle,MLmetrics,ranger, SuperLearner, randomForest)
 
 #cargamos nuestra base 
 
@@ -38,12 +38,6 @@ escalador <- preProcess(train[, variables_numericas],
 train_s[, variables_numericas] <- predict(escalador, train[, variables_numericas])
 test_s[, variables_numericas] <- predict(escalador, test[, variables_numericas])
 
-
-#Analisis de distribución ####
-#diagreama de disperción 
-
-
-#diagrama de cajas y bigotes 
 
 #exportamos la base estandarizada y dummificada####
 #saveRDS(train_s, file = "train_s.rds")
