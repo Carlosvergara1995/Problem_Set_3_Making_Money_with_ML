@@ -5,6 +5,10 @@
 
 #######Preparación del espacio########
 
+library(pacman)
+p_load(tidyverse,rio,skimr,dplyr, caret, magrittr, glmnet,smotefamily,ROSE, rpart, rattle,MLmetrics,ranger, SuperLearner, randomForest)
+
+
 #Modelo Arboles
 set.seed(123)
 
