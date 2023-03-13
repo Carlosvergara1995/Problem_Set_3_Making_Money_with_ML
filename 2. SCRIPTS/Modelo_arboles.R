@@ -133,31 +133,3 @@ MAE(y_pred = y_hat_insample3, y_true = train1$price)
 MAPE(y_pred = y_hat_outsample3, y_true = valit$price)
 MAE(y_pred = y_hat_outsample3, y_true = valit$price)
 
-############
-#agregamos pesos a nuestro modelo 
-# Definimos los pesos para las predicciones correctas e incorrectas
-peso_correcto <- 2
-peso_incorrecto <- 1
-
-# Creamos una función de pérdida que calcula la media ponderada de los errores
-# utilizando los pesos correspondientes
-custom_loss <- function(y_true, y_pred) {
-  errores <- y_true - y_pred
-  pesos <- ifelse(errores == 0, peso_correcto, peso_incorrecto)
-  weighted.mean(abs(errores), pesos)
-}
-# Entrenamos el modelo utilizando la función de pérdida personalizada
-modelod <- train(price ~ .,
-                 data = train1,
-                 trControl = cv8,
-                 metric = "RMSE",
-                 tuneGrid = grilla,
-                 method = "ranger",
-                 custom_loss = custom_loss)
-
-
-
-
-
-
-
